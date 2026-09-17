@@ -87,7 +87,8 @@ git clone https://github.com/jwwangchn/cocoapi-aitod
 ## Data
 
 All paths derive from one environment variable, `TOD_ROOT` (default
-`/home/arge/tod`), laid out as `data/levir/`, `work/`, `ext/`, `torch_home/`.
+`~/tod`), laid out as `data/levir/`, `work/`, `ext/`, `torch_home/`. AI-TOD-v2
+has its own, `AITOD_ROOT`.
 
 LEVIR-Ship, official DRENet partition:
 

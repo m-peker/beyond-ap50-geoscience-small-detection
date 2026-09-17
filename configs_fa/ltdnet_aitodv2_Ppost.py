@@ -5,8 +5,8 @@ import os  # noqa: E402  (config is exec'd, not imported)
 
 _base_ = '../configs_ltdnet/ltdnet/LTDNet_AI_TODv2.py'
 
-aitod_root = os.environ.get('AITOD_ROOT',
-                            '/home/arge/tod/aitod_build/work/aitod') + '/'
+aitod_root = os.environ.get(
+    'AITOD_ROOT', os.path.expanduser('~/tod/aitod_build/work/aitod')) + '/'
 ann_root = aitod_root + 'annotations/'
 
 model = dict(

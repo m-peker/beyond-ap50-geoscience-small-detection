@@ -3,7 +3,8 @@
 # receive the same number of optimisation steps.
 import os  # noqa: E402  (config is exec'd, not imported)
 
-data_root = os.environ.get('TOD_ROOT', '/home/arge/tod') + '/data/levir/'
+data_root = os.environ.get(
+    'TOD_ROOT', os.path.expanduser('~/tod')) + '/data/levir/'
 dataset_type = 'CocoDataset'
 classes = ('ship', )
 max_iters = 14000

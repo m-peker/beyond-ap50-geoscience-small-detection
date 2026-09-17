@@ -15,7 +15,7 @@ import os.path as osp
 import pickle
 
 from fa_eval import evaluate
-from paths import WORK
+from paths import WORK, aitod_ann
 
 CLASSES = ('airplane', 'bridge', 'storage-tank', 'ship', 'swimming-pool',
            'vehicle', 'person', 'wind-mill')
@@ -25,8 +25,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('base')
     parser.add_argument('calibrated')
-    parser.add_argument('--ann', default='/home/arge/tod/aitod_build/work/'
-                                         'aitod/annotations/aitodv2_test.json')
+    parser.add_argument('--ann', default=aitod_ann('test'))
     parser.add_argument('--recalls', type=float, nargs='+', default=[0.5, 0.7])
     parser.add_argument('--out', default=osp.join(WORK, 'aitodv2_per_class.json'))
     args = parser.parse_args()

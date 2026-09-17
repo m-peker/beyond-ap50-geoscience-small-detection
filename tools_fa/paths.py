@@ -7,10 +7,18 @@ code edits.  Layout under the root:  data/levir/, work/, ext/, torch_home/.
 import os
 import os.path as osp
 
-ROOT = os.environ.get('TOD_ROOT', '/home/arge/tod')
+ROOT = os.environ.get('TOD_ROOT', osp.expanduser('~/tod'))
 DATA = osp.join(ROOT, 'data', 'levir')
 WORK = osp.join(ROOT, 'work')
 EXT = osp.join(ROOT, 'ext')
+# AI-TOD-v2 is synthesised separately; its root is its own variable so the
+# second benchmark can live anywhere.
+AITOD = os.environ.get('AITOD_ROOT', osp.join(ROOT, 'aitod_build', 'work',
+                                              'aitod'))
+
+
+def aitod_ann(split):
+    return osp.join(AITOD, 'annotations', 'aitodv2_%s.json' % split)
 
 
 def ann(split):

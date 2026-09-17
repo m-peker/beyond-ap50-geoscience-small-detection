@@ -8,8 +8,12 @@ import json
 import os.path as osp
 
 import numpy as np
+import sys
 
-W = '/home/arge/tod/work'
+sys.path.insert(0, "tools_fa")
+from paths import WORK
+
+W = WORK
 
 
 def stat(run, key, seeds=(0, 1, 2)):

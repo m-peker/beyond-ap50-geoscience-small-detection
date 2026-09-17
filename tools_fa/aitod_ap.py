@@ -26,8 +26,9 @@ for _name, _builtin in (('float', float), ('int', int), ('bool', bool)):
 
 from aitodpycocotools.coco import COCO  # noqa: E402
 from aitodpycocotools.cocoeval import COCOeval  # noqa: E402
+from paths import aitod_ann
 
-ANN = ('/home/arge/tod/aitod_build/work/aitod/annotations/aitodv2_test.json')
+ANN = aitod_ann('test')
 # index into COCOeval.stats for AI-TOD's summary rows
 SLOTS = {'AP': 0, 'AP50': 2, 'AP75': 3, 'AP_verytiny': 4, 'AP_tiny': 5}
 

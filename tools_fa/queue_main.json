@@ -1,0 +1,254 @@
+[
+ {
+  "config": "configs_ltdnet/ltdnet/LTDNet_LEVIR_Ship.py",
+  "seed": 0,
+  "tag": "_released",
+  "cfg_options": [
+   "model.backbone.pretrained=None",
+   "data.test.ann_file=/home/arge/tod/data/levir/annotations/instances_test2017.json",
+   "data.test.img_prefix=/home/arge/tod/data/levir/images/test2017/",
+   "model.test_cfg.score_thr=0.001",
+   "model.test_cfg.max_per_img=300"
+  ]
+ },
+ {
+  "config": "configs_fa/fcos_p2_pos.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fcos_p2_all.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_N.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 0,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_P_s0",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 0,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_Pdet_s0",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 0,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_PN_s0",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/rfla_p2_pos.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/rfla_p2_all.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/nwd_p2_pos.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/nwd_p2_all.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 0
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 0,
+  "tag": "_g0",
+  "ckpt_from": "fa_rfla_p2_all_PN_s0",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fcos_p2_pos.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fcos_p2_all.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_N.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 1,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_P_s1",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 1,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_Pdet_s1",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 1,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_PN_s1",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/rfla_p2_pos.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/rfla_p2_all.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/nwd_p2_pos.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/nwd_p2_all.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 1
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 1,
+  "tag": "_g0",
+  "ckpt_from": "fa_rfla_p2_all_PN_s1",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fcos_p2_pos.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fcos_p2_all.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_N.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_P.py",
+  "seed": 2,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_P_s2",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_Pdet.py",
+  "seed": 2,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_Pdet_s2",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_fcos_p2_all_PN.py",
+  "seed": 2,
+  "tag": "_g0",
+  "ckpt_from": "fa_fcos_p2_all_PN_s2",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ },
+ {
+  "config": "configs_fa/rfla_p2_pos.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/rfla_p2_all.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/nwd_p2_pos.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/nwd_p2_all.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 2
+ },
+ {
+  "config": "configs_fa/fa_rfla_p2_all_PN.py",
+  "seed": 2,
+  "tag": "_g0",
+  "ckpt_from": "fa_rfla_p2_all_PN_s2",
+  "test_cfg_options": [
+   "model.bbox_head.presence.gamma=0"
+  ]
+ }
+]

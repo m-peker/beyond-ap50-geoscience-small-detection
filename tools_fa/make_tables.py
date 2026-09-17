@@ -94,10 +94,12 @@ def published_table():
            'themselves, beside our configurations. Published values are '
            'computed without the annotation identifier fix of Section~III-C, '
            'so the comparable column for our runs is AP50$^{\\dagger}$; the '
-           'fix is worth $0.274\\pm0.058$ points. Our detectors are plain '
-           'rather than tuned for this benchmark, and the calibration is '
-           'applied to a published checkpoint in Table~\\ref{tab:posthoc} '
-           'rather than competing with one here.}',
+           'fix is worth $0.274\\pm0.058$ points. The table is context, not a '
+           'ranking: our detectors are deliberately plain rather than tuned for '
+           'this benchmark, and the contribution of this paper is orthogonal to '
+           'where a method sits in this column --- the calibration is applied '
+           'to a published checkpoint in Table~\\ref{tab:posthoc} rather than '
+           'competing with one here.}',
            '\\label{tab:published}', '\\begin{tabular}{lrr}', '\\toprule',
            'Method & AP50 & AP50$^{\\dagger}$ \\\\', '\\midrule']
     for name, ap in PUBLISHED:
@@ -152,9 +154,46 @@ def aitod_table():
     sources are stated in the caption rather than silently mixed.
     """
     ap = json.load(open(osp.join(WORK, 'aitodv2_ap_official.json')))
-    fa = json.load(open(osp.join(WORK, 'aitodv2_per_class_gated.json')))
     base_ap = ap['LTDNet_aitodv2_authorcfg_s0']
-    cal_ap = ap['LTDNet_aitodv2_gated_authorcfg_s0']
+    # the calibrated AP is averaged over the seeds that exist; the base is one
+    # number because the detector is a fixed released checkpoint
+    cal_files = [osp.join(WORK, 'aitodv2_ap_official.json')] + [
+        osp.join(WORK, f'aitodv2_ap_official_s{s}.json') for s in (1, 2)]
+    cal_runs = []
+    for i, f in enumerate(cal_files):
+        if not osp.exists(f):
+            continue
+        d = json.load(open(f))
+        key = ('LTDNet_aitodv2_gated_authorcfg_s0' if i == 0
+               else f'LTDNet_aitodv2_gated_authorcfg_s{i}')
+        if key in d:
+            cal_runs.append(d[key])
+    fa_files = [osp.join(WORK, f'aitodv2_per_class_gated_s{s}.json')
+                for s in (0, 1, 2)]
+    fa_runs = [json.load(open(f)) for f in fa_files if osp.exists(f)]
+    if not fa_runs:                       # before the per-seed recomputation
+        fa_runs = [json.load(open(osp.join(WORK,
+                                           'aitodv2_per_class_gated.json')))]
+    fa = fa_runs[0]
+
+    def across(cls, side, key, runs):
+        vals = [r[cls][side][key] for r in runs
+                if r[cls][side][key] == r[cls][side][key]]
+        return (np.mean(vals), np.std(vals), len(vals)) if vals else None
+
+    def spread(cls, side, key):
+        st = across(cls, side, key, fa_runs)
+        if st is None:
+            return '--'
+        m, sd, n = st
+        return f'{m * 100:.2f}' if n == 1 else f'{m * 100:.2f}$\\pm${sd * 100:.2f}'
+
+    def cal_ap_of(cls):
+        vals = [r[cls]['AP50'] for r in cal_runs]
+        if not vals:
+            return '--'
+        return (f'{np.mean(vals) * 100:.2f}' if len(vals) == 1 else
+                f'{np.mean(vals) * 100:.2f}$\\pm${np.std(vals) * 100:.2f}')
     order = ['ship', 'vehicle', 'person', 'storage-tank', 'airplane',
              'bridge', 'swimming-pool', 'wind-mill']
     out = ['\\begin{table}[t]', '\\centering',
@@ -177,18 +216,17 @@ def aitod_table():
            'Class & neg. & base & cal. & base & cal. & base & cal. \\\\',
            '\\midrule']
     for c in order:
-        b, g = fa[c]['base'], fa[c]['calibrated']
-        f0, f1 = b.get('FAimg@R0.7'), g.get('FAimg@R0.7')
-        p0, p1 = b.get('FPPIneg@R0.7'), g.get('FPPIneg@R0.7')
-        def num(v, digits=2):
-            return '--' if v is None or v != v else f'{v * 100:.{digits}f}'
+        b = fa[c]['base']
         out.append(
-            f"{c.replace('-', '-')} & {b['num_neg_images']} & "
-            f"{base_ap[c]['AP50'] * 100:.2f} & {cal_ap[c]['AP50'] * 100:.2f} & "
-            f"{num(f0)} & {num(f1)} & {num(p0)} & {num(p1)} \\\\")
+            f"{c} & {b['num_neg_images']} & "
+            f"{base_ap[c]['AP50'] * 100:.2f} & {cal_ap_of(c)} & "
+            f"{spread(c, 'base', 'FAimg@R0.7')} & "
+            f"{spread(c, 'calibrated', 'FAimg@R0.7')} & "
+            f"{spread(c, 'base', 'FPPIneg@R0.7')} & "
+            f"{spread(c, 'calibrated', 'FPPIneg@R0.7')} \\\\")
     out += ['\\midrule',
             f"mean & --- & {base_ap['overall']['AP50'] * 100:.2f} & "
-            f"{cal_ap['overall']['AP50'] * 100:.2f} & & & & \\\\",
+            f"{cal_ap_of('overall')} & & & & \\\\",
             '\\bottomrule', '\\end{tabular}}', '\\end{table}', '']
     return '\n'.join(out)
 
@@ -225,6 +263,11 @@ def main():
         'Section~III-C, the form in which published numbers are computed.',
         'tab:negatives', titles)
 
+    # the uncorrected AP50 belongs where our numbers are read against published
+    # ones; inside this table both columns are ours, and the dagger would be an
+    # unexplained symbol
+    posthoc_metrics = [m for m in metrics if m != 'AP50_noidfix']
+    posthoc_titles = [t for t, m in zip(titles, metrics) if m != 'AP50_noidfix']
     files['posthoc.tex'] = table(
         [('FCOS-P2', 'fa_fcos_p2_all_Ppost_g0', SEEDS),
          ('\\quad + calibration', 'fa_fcos_p2_all_Ppost', SEEDS),
@@ -234,11 +277,11 @@ def main():
          (None, None, None),
          ('LTDNet, released checkpoint', 'LTDNet_Ppost_g0', (0,)),
          ('\\quad + calibration', 'LTDNet_Ppost', (0,))],
-        metrics,
+        posthoc_metrics,
         'Post-hoc scene-evidence calibration on three detectors, including one '
         'we did not train. Each first row is the detector with the branch '
         'disabled ($\\gamma=0$), which reproduces it exactly.',
-        'tab:posthoc', titles)
+        'tab:posthoc', posthoc_titles)
 
     ablation = ['AP50', 'LAMR', 'FAimg@R0.8', 'FAimg@R0.9', 'FPPIneg@R0.9']
     ablation_titles = ['AP50', 'LAMR$\\downarrow$',
